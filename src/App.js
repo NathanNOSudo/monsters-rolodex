@@ -1,33 +1,37 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-
-// I want the functionality and im adding onto it, hence react class extends component?
+// import {SearchBox} from "./components/search-box/search-box.component";
+import { CardList } from "./components/card-list/card-list.component";
+// I want the functionality and im adding onto it, hence react class extends component?s
+// <h1> Mon-stars Line Up </h1>
+// <SearchBox onSearchChange={this.onSearchChange} />
+// <CardList monsters={filteredMonsters} />
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      monsters: [
-        { name: "Goblin", id: "asc1", color: "green" },
-        { name: "Orc", id: "asr2", color: "green" },
-        { name: "Troll", id: "as1W", color: "green" },
-        { name: "Goblin", id: "asc2", color: "blue" },
-      ],
+      monsters: [],
+      searchField: "",
     };
   }
+
+  componentDidMount() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((users) => this.setState({ monsters: users }));
+  }
+
+  onSearchChange = (event) => {};
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            {this.state.monsters.map((monster) => (
-              <h1> {monster.name}</h1>
-            ))}
-          </p>
-        </header>
+        <CardList clssname="card-container" name="nate-doggy">
+          {this.state.monsters.map((monster) => (
+            <h1 key={monster.id}>{monster.name}</h1>
+          ))}
+        </CardList>
       </div>
     );
   }
